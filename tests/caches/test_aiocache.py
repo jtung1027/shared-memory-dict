@@ -6,7 +6,6 @@ from shared_memory_dict.caches.aiocache import SharedMemoryCache
 
 @pytest.mark.asyncio
 class TestAioCache:
-
     @pytest.fixture
     async def backend(self):
         cache = SharedMemoryCache(name='ut', size=1024)
@@ -28,14 +27,16 @@ class TestAioCache:
         assert await backend.add(key, value) is True
         assert await backend.get(key) == value
 
-    async def test_should_not_add_value_if_already_exists(self, backend, key, value):
+    async def test_should_not_add_value_if_already_exists(
+        self, backend, key, value
+    ):
         await backend.set(key, value)
         with pytest.raises(ValueError):
             await backend.add(key, value)
 
-    @pytest.mark.parametrize('value', (
-        'string', 1, {'some': 'dict'}, ['some', 'list']
-    ))
+    @pytest.mark.parametrize(
+        'value', ('string', 1, {'some': 'dict'}, ['some', 'list'])
+    )
     async def test_should_set_and_get_value(self, backend, key, value):
         try:
             await backend.set(key, value)

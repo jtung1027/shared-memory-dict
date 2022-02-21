@@ -5,7 +5,6 @@ from shared_memory_dict.templates import MEMORY_NAME
 
 
 class TestHooks:
-
     def test_should_create_shared_memory(self):
         expected_name = 'unit-test'
         expected_size = 64
@@ -16,7 +15,7 @@ class TestHooks:
         mock.assert_called_once_with(
             MEMORY_NAME.format(name=expected_name),
             create=True,
-            size=expected_size
+            size=expected_size,
         )
 
     def test_should_free_shared_memory(self):

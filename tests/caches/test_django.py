@@ -5,7 +5,6 @@ from shared_memory_dict.caches.django import SharedMemoryCache
 
 
 class TestDjangoSharedMemoryCache:
-
     @pytest.fixture
     def backend(self):
         cache = SharedMemoryCache(name='ut', params={})
@@ -31,9 +30,9 @@ class TestDjangoSharedMemoryCache:
         backend.set(key, value)
         assert backend.add(key, value) is False
 
-    @pytest.mark.parametrize('value', (
-        'string', 1, 0.300, {'some': 'dict'}, ['some', 'list']
-    ))
+    @pytest.mark.parametrize(
+        'value', ('string', 1, 0.300, {'some': 'dict'}, ['some', 'list'])
+    )
     def test_should_set_and_get_value(self, backend, value):
         key = 'some-key'
         try:
@@ -53,13 +52,12 @@ class TestDjangoSharedMemoryCache:
 
         assert backend.get(key) == value
 
-
     def test_get_a_non_exists_key_with_default_value(self, backend):
         expected_value = 'some-random-value'
-        assert backend.get(
-            'some-random-key',
-            default=expected_value
-        ) == expected_value
+        assert (
+            backend.get('some-random-key', default=expected_value)
+            == expected_value
+        )
 
     def test_should_incr_value(self, backend, key):
         backend.add(key, 0)

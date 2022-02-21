@@ -34,17 +34,12 @@ def collect(cache_var_name):
         stmt=f'fun({cache_var_name})', number=100, globals=globals()
     )
 
-    return {
-        'agressive': time_of_agressive,
-        'fun': time_of_fun
-    }
+    return {'agressive': time_of_agressive, 'fun': time_of_fun}
 
 
 if __name__ == '__main__':
     caches = {
-        k: collect(k)
-        for k in globals().keys()
-        if k.startswith('cache_')
+        k: collect(k) for k in globals().keys() if k.startswith('cache_')
     }
 
     print('Bench Against Sync Solutions')

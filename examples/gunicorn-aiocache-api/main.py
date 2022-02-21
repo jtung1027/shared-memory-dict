@@ -2,16 +2,17 @@ from aiocache import caches
 from aiohttp import web
 
 
-caches.set_config({
-    'default': {
-        'cache': 'shared_memory_dict.caches.aiocache.SharedMemoryCache',
-        'name': 'sm'
+caches.set_config(
+    {
+        'default': {
+            'cache': 'shared_memory_dict.caches.aiocache.SharedMemoryCache',
+            'name': 'sm',
+        }
     }
-})
+)
 
 
 class Handler(web.View):
-
     async def get(self):
         key = self.request.query.get('key', '')
         text = await self.request.app['cache'].get(key)
